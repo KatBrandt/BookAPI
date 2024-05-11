@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
+  describe "associations" do 
+    it { should have_many :store_books}
+    it { should have_many :stores }
+  end
+
   describe "callbacks" do 
     describe "#calculate_popularity before_save" do 
       it "assigns high popularity" do 
