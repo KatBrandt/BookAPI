@@ -89,4 +89,34 @@ describe "Books API" do
       expect(created_book.number_sold).to eq book_params[:number_sold]
     end
   end
+
+  describe "PATCH /books/:id" do 
+    scenario "successful update" do 
+      id = create(:book).id
+      new_book_params = { title: "New Book Title" }
+      headers = { "CONTENT_TYPE" => "application/json" }
+
+      patch "/api/v1/books/#{id}", 
+        headers: headers, 
+        params: JSON.generate(book: new_book_params)
+
+      expect(response.status).to eq 200
+
+      changed_book = Book.find(id)
+
+      expect(Book.count).to eq 1
+      expect(changed_book.title).to eq "New Book Title"
+    end
+  end
+
+  describe "DELETE /books/:id" do 
+    scenario "successful delete" do 
+      book = create(:book)
+
+      delete "/api/v1/books/#{book.id}"
+
+      expect(response.status).to eq 200
+      expect(Book.count).to eq 0
+    end
+  end
 end
