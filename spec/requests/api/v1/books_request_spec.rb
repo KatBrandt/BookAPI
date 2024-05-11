@@ -113,10 +113,15 @@ describe "Books API" do
     scenario "successful delete" do 
       book = create(:book)
 
-      delete "/api/v1/books/#{book.id}"
+      # delete "/api/v1/books/#{book.id}"
+      # using the "change" syntax
+      expect{ 
+        delete "/api/v1/books/#{book.id}" 
+      }.to change(Book, :count).by(-1)
 
       expect(response.status).to eq 200
       expect(Book.count).to eq 0
+      expect{Book.find(book.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
