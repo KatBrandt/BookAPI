@@ -73,13 +73,15 @@ describe "Books API" do
         number_sold: 4
       }
 
-      # headers: { "CONTENT_TYPE" => application/json}
-      post "/api/v1/books", params: book_params
+      headers = { "CONTENT_TYPE" => "application/json" }
+
+      post "/api/v1/books", headers: headers, params: JSON.generate(book: book_params)
 
       expect(response.status).to eq 201
 
       created_book = Book.last
 
+      expect(Book.count).to eq 1
       expect(created_book.title).to eq book_params[:title]
       expect(created_book.author).to eq book_params[:author]
       expect(created_book.genre).to eq book_params[:genre]
