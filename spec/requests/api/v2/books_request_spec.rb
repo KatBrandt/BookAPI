@@ -28,7 +28,7 @@ describe "Books API V2" do
         expect(book[:summary]).to be_a String 
         
         expect(book).to have_key(:popularity)
-        expect(book[:popularity]).to be_an Integer
+        expect(book[:popularity]).to be_a String
 
         #change from V1
         expect(book).to_not have_key(:number_sold)
