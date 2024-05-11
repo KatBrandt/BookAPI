@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Books API" do 
+describe "Books API V1" do 
   describe "GET /books" do 
     scenario "books exist in database" do 
       create_list(:book, 3)
