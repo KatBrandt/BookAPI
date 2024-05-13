@@ -3,8 +3,9 @@ require "rails_helper"
 describe "Stores API V1" do 
   describe "GET /stores" do 
     scenario "stores exist in database" do 
-      create_list(:store, 3)
-
+      store_1, store_2 = create_list(:store, 2)
+      create_list(:book, 3, store: store_1)
+      create_list(:book, 4, store: store_2)
       get "/api/v1/stores"
 
       stores = JSON.parse(response.body, symbolize_names: true)

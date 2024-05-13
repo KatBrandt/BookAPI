@@ -1,6 +1,6 @@
 class Api::V1::StoresController < ApplicationController
   def index
-    render json: Store.all
+    render json: StoreSerializer.format_data(Store.all)
   end
 
   def show 
