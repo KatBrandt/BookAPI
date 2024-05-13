@@ -1,29 +1,16 @@
 class StoreSerializer
-  def self.format_data(stores)
-    stores.map do |store|
-      {
-        data: [
-          type: "store",
-          attributes: {
-            name: store.name,
-            num_books: store.books.count
-          },
-          relationships: {
-            books: {
-              data: get_book_data(store)
-            }
-          }
-        ]
-      }
-    end
-  end
+  include JSONAPI::Serializer
+  attributes :name, :num_books
 
-  def self.get_book_data(store)
-    store.books.map do |book|
-      {
-        id: book.id,
-        type: "book"
-      }
-    end
-  end
+  has_many :books 
+
+  # Could write customer attribute here, or put this
+  # method in the Store Model
+  # attribute :num_books do |obj|
+  #   obj.books.count
+  # end
+
+  attribute :active do 
+    true 
+  end 
 end
