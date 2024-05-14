@@ -9,18 +9,14 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def create
-    book = Book.new(book_params)
-    if book.save
-      render json: { message: "Book was created"}, status: 201
-    else
-      render json: { error: "Could not create book"}, status: 400
-    end
+    Book.create!(book_params)
+    render status: 201
   end
 
   def update 
     book = Book.find(params[:id])
     if book.update(book_params)
-      render json: { message: "Book was modified"}, status: 200
+      render status: 200
     else
       render json: { error: "Could not update book"}, status: 403
     end
