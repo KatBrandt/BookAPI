@@ -13,7 +13,7 @@ class Api::V1::BooksController < ApplicationController
     if book.save
       render json: { message: "Book was created"}, status: 201
     else
-      render json: { error: "Could not create book"}, status: 403
+      render json: { error: "Could not create book"}, status: 400
     end
   end
 

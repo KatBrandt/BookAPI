@@ -4,6 +4,8 @@ class Book < ApplicationRecord
   has_many :store_books
   has_many :stores, through: :store_books
 
+  validates_presence_of :title, :author
+
   private
   def calculate_popularity
     if number_sold > 5

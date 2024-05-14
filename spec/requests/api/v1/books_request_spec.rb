@@ -102,6 +102,10 @@ describe "Books API V1" do
       expect(created_book.summary).to eq book_params[:summary]
       expect(created_book.number_sold).to eq book_params[:number_sold]
     end
+
+    scenario "invalid params" do 
+      
+    end
   end
 
   describe "PATCH /books/:id" do 

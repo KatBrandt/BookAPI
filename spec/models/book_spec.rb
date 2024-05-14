@@ -6,6 +6,11 @@ RSpec.describe Book, type: :model do
     it { should have_many :stores }
   end
 
+  describe "validations" do 
+    it { validate_presence_of :title}
+    it { validate_presence_of :author}
+  end
+
   describe "callbacks" do 
     describe "#calculate_popularity before_save" do 
       it "assigns high popularity" do 
