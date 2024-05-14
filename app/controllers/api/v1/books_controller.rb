@@ -10,7 +10,7 @@ class Api::V1::BooksController < ApplicationController
 
   def create
     Book.create!(book_params)
-    render status: 201
+    render json: { error: "Book successfully created."}, status: 201
   end
 
   def update 
