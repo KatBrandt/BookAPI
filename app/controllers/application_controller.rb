@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::API
+  include Pagy::Backend
+  after_action { pagy_headers_merge(@pagy) if @pagy }
+  
   rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :invalid_record_response
 
