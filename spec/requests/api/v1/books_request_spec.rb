@@ -30,39 +30,53 @@ describe "Books API V1" do
         expect(book).to have_key(:number_sold)
         expect(book[:number_sold]).to be_an Integer
       end
+
     end
   end
-
+  
   describe "GET /books/:id" do 
     scenario "book exists" do 
       book = create(:book)
       
       get "/api/v1/books/#{book.id}"
-
+      
       expect(response).to be_successful
       
       book_response = JSON.parse(response.body, symbolize_names: true)
-
+      
       expect(book_response).to have_key(:id)
       expect(book_response[:id]).to eq book.id
-
+      
       expect(book_response).to have_key(:title)
       expect(book_response[:title]).to eq book.title
-
+      
       expect(book_response).to have_key(:author)
       expect(book_response[:author]).to eq book.author
-
+      
       expect(book_response).to have_key(:summary)
       expect(book_response[:summary]).to eq book.summary
-
+      
       expect(book_response).to have_key(:genre)
       expect(book_response[:genre]).to eq book.genre
-
+      
       expect(book_response).to have_key(:number_sold)
       expect(book_response[:number_sold]).to eq book.number_sold
     end
-  end
 
+    scenario "book id does not exist" do 
+      get "/api/v1/books/1"
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq 404
+
+      data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(data[:errors]).to be_an Array
+      expect(data[:errors].first[:status]).to eq "404"
+      expect(data[:errors].first[:title]).to eq "Couldn't find Book with 'id'=1"
+    end
+  end
+  
   describe "POST /books" do 
     scenario "valid params" do 
       book_params = {
