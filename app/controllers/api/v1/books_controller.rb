@@ -1,7 +1,10 @@
 class Api::V1::BooksController < ApplicationController
+  include Pagy::Backend
+  after_action { pagy_headers_merge(@pagy) if @pagy }
   
   def index 
-    render json: BookSerializer.new(Book.all)
+    @pagy, books = pagy(Book.all, items: 5)
+    render json: BookSerializer.new(books)
   end
 
   def show
